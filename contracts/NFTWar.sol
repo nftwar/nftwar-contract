@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import "@openzeppelin/contracts@4.7.2/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts@4.7.2/token/ERC721/extensions/ERC721URIStorage.sol";
-import "@openzeppelin/contracts@4.7.2/token/ERC721/extensions/ERC721Enumerable.sol";
-import "@openzeppelin/contracts@4.7.2/access/Ownable.sol";
-import "@openzeppelin/contracts@4.4.2/utils/Counters.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
 
 // this is attribute part (remember, this is just enum!)
 enum Attr {
@@ -25,10 +25,10 @@ enum ModuleType {
 }
 
 // base contract
-contract Item is ERC721, ERC721URIStorage, ERC721Enumerable, Ownable {
+contract Item is ERC721URIStorage, ERC721Enumerable, Ownable {
     mapping(uint256 => uint256[]) attribute;
 
-    constructor() ERC721("NFTWAR Item", "nItem") {}
+    constructor(string memory _name, string memory _symbol) ERC721(_name, _symbol) {}
 
     function mint(address target, uint256[] memory _attributes) public returns (uint256) {
         uint256 tokenId = totalSupply() + 1; // tokenId start from 1, NOT ZERO!
@@ -49,14 +49,30 @@ contract Item is ERC721, ERC721URIStorage, ERC721Enumerable, Ownable {
     function tokenURI(uint256 tokenId) public view override(ERC721, ERC721URIStorage) returns (string memory) {
        return super.tokenURI(tokenId);
     }
+
+    function _beforeTokenTransfer(address from, address to, uint256 tokenId)
+        internal
+        override(ERC721, ERC721Enumerable)
+    {
+        super._beforeTokenTransfer(from, to, tokenId);
+    }
+
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        override(ERC721, ERC721Enumerable)
+        returns (bool)
+    {
+        return super.supportsInterface(interfaceId);
+    }
 }
 
 contract Module is Item {
-    constructor() ERC721("NFTWAR Module", "nMODULE") {}
+    constructor() Item("NFTWAR Module", "nMODULE") {}
 }
 
 contract Mech is Item {
-    constructor() ERC721("NFTWAR Mech", "nMECH") {}
+    constructor() Item("NFTWAR Mech", "nMECH") {}
 }
 
 contract NFTWAR_V1 {
