@@ -5,7 +5,7 @@ import "./beta_nft.sol";
 
 contract NFTWARbetaBattle is Ownable, ContractGuard {
     NFTWARbetaPARTS public PartsContract;
-
+    mapping(address => uint256[]) public latestUnit;
 
     constructor(NFTWARbetaPARTS parts) {
         PartsContract =  parts;
@@ -17,6 +17,8 @@ contract NFTWARbetaBattle is Ownable, ContractGuard {
         uint256 userATK = 0;
         uint256 enemyDEF = 0;
         uint256 enemyATK = 0;
+
+        latestUnit[msg.sender] = tokenIds;
 
         for(i = 0; i < tokenIds.length; i++ ) {
             require(msg.sender == PartsContract.ownerOf(tokenIds[i]));
