@@ -44,8 +44,12 @@ contract NFTWARbetaBattle is Ownable, ContractGuard {
             // 유저가 먼저 쓰러짐 (여러방 패)
             return false;
         }
-        else{
-            // 유저 방어력이 상대 공격보다 낮을 시
+        else{// 유저 방어력이 상대 공격보다 낮을 시
+            // 유저 공격이 상대 방어보다 더 높음 - 서로 한대 - 유저가 이김
+            if(userATK >= enemyDEF){
+                return true;
+            }
+
             // 한대맞고 죽음
             return false;
         }
