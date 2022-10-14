@@ -10,6 +10,8 @@ contract NFTWARbetaBattle is Ownable, ContractGuard {
     constructor(NFTWARbetaPARTS parts) {
         PartsContract =  parts;
     }
+    
+    event Result(bool isWin);
 
     function battle(uint256[] memory tokenIds, uint256[] memory enemeyTokenIds) external returns (bool isWin) {
         uint256 i = 0;
@@ -35,10 +37,12 @@ contract NFTWARbetaBattle is Ownable, ContractGuard {
         if(userDEF >= enemyATK){
             // 유저 공격이 상대 방어보다 높으면 이김 (한대)
             if(userATK >= enemyDEF){
+                emit Result(true);
                 return true;
             }
             // 유저 공격이 상대 방어보다 낮지만, 유저 공격이 더 센 경우 (여러대 선승)
             else if(userDEF - enemyATK >= enemyDEF - userATK){
+                emit Result(true);
                 return true;
             }
             // 유저가 먼저 쓰러짐 (여러방 패)
@@ -47,10 +51,12 @@ contract NFTWARbetaBattle is Ownable, ContractGuard {
         else{// 유저 방어력이 상대 공격보다 낮을 시
             // 유저 공격이 상대 방어보다 더 높음 - 서로 한대 - 유저가 이김
             if(userATK >= enemyDEF){
+                emit Result(true);
                 return true;
             }
 
             // 한대맞고 죽음
+            emit Result(false);
             return false;
         }
 
