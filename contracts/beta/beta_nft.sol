@@ -59,8 +59,14 @@ contract NFTWARbetaPARTS is ERC721A, Ownable {
     }
 
     // LGTM
-    function setDEF(string memory baseURI_) public onlyOwner() {
-        _baseURIextended = baseURI_;
+    function getATK(uint256 toeknId) public view returns (uint256) {
+        return ATK[toeknId];
+    }
+
+
+    // LGTM
+    function getDEF(uint256 toeknId) public view returns (uint256) {
+        return DEF[toeknId];
     }
 
     // LGTM
