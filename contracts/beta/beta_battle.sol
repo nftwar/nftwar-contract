@@ -1,7 +1,7 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "./nftwar_beta.sol";
+import "./beta_nft.sol";
 
 contract NFTWARbetaBattle is Ownable, ContractGuard {
     NFTWARbetaPARTS public PartsContract;
