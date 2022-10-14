@@ -32,7 +32,7 @@ contract Item is ERC721URIStorage, ERC721Enumerable, Ownable {
 
     function mint(address target, uint256[] memory _attributes) public returns (uint256) {
         uint256 tokenId = totalSupply() + 1; // tokenId start from 1, NOT ZERO!
-        attribute[tokenId] = _attributes;
+        attribute[tokenId] =  ;
         _mint(target, tokenId);
         return tokenId;
     }
