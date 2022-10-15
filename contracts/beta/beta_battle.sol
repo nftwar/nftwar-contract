@@ -23,7 +23,7 @@ contract NFTWARbetaBattle is Ownable, ContractGuard {
         latestUnit[msg.sender] = tokenIds;
 
         for(i = 0; i < tokenIds.length; i++ ) {
-            require(msg.sender == PartsContract.ownerOf(tokenIds[i]));
+            require(msg.sender == PartsContract.ownerOf(tokenIds[i]), "sender is not owner of token");
             userDEF += PartsContract.getDEF(tokenIds[i]);
             userATK += PartsContract.getATK(tokenIds[i]);
         }
@@ -79,5 +79,9 @@ contract NFTWARbetaBattle is Ownable, ContractGuard {
         // } else {
         //     return (false);
         // }
+    }
+
+    function getLatestUnit(address _user) public view returns (uint256[] memory){
+        return latestUnit[_user];
     }
 }
