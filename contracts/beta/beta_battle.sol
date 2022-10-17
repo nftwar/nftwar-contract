@@ -36,6 +36,11 @@ contract NFTWARbetaBattle is Ownable, ContractGuard {
 
         emit Battle(userDEF, userATK, enemyDEF, enemyATK);
 
+        if(userATK == 0 && enemyATK == 0){
+            emit Result(true);
+            return true;
+        }
+
         // uint이기때문에 userDEF > enemyATK 라면 프로그램이 터짐
         // 선공 후공 랜덤
         if (block.timestamp % 2 == 0) {
